@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fivo Tech — Build. Promote. Grow.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00e5a0;
+    --accent2: #7c6dff;
+    --text: #f0ede8;
+    --muted: #7a7a8a;
+    --heading: 'Syne', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 4%;
+    background: rgba(10,10,15,0.82);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+
+  .logo-dot {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 0.88rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4% 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 55% at 70% 40%, rgba(124,109,255,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 15% 80%, rgba(0,229,160,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid-line {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,160,0.08);
+    border: 1px solid rgba(0,229,160,0.25);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  h1 {
+    font-family: var(--heading);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    max-width: 780px;
+    margin-bottom: 1.75rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    -webkit-text-stroke: 1.5px var(--accent);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.8rem 2rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .btn-ghost:hover { opacity: 1; }
+
+  .btn-ghost svg { width: 16px; height: 16px; }
+
+  .hero-stats {
+    margin-top: 4rem;
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-num {
+    font-family: var(--heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── SERVICES ── */
+  .section {
+    padding: 6rem 4%;
+    position: relative;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    max-width: 480px;
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 3.5rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover { background: var(--surface2); }
+
+  .service-card.featured {
+    background: var(--surface2);
+  }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .icon-green { background: rgba(0,229,160,0.1); }
+  .icon-purple { background: rgba(124,109,255,0.12); }
+  .icon-blue { background: rgba(80,160,255,0.1); }
+
+  .service-tag {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+  }
+
+  .tag-popular { background: rgba(0,229,160,0.1); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+  .tag-trending { background: rgba(124,109,255,0.1); color: #9b8dff; border: 1px solid rgba(124,109,255,0.2); }
+  .tag-new { background: rgba(80,160,255,0.1); color: #60b0ff; border: 1px solid rgba(80,160,255,0.2); }
+
+  .service-title {
+    font-family: var(--heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-desc {
+    color: var(--muted);
+    font-size: 0.92rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── PRICING ── */
+  .pricing-section { padding: 6rem 4%; }
+
+  .pricing-card {
+    max-width: 540px;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+  }
+
+  .pricing-glow {
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #000;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-name {
+    font-family: var(--heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-original {
+    font-size: 1.2rem;
+    color: var(--muted);
+    text-decoration: line-through;
+    font-weight: 300;
+  }
+
+  .price-current {
+    font-family: var(--heading);
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+
+  .price-period {
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  .price-note {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .features-list {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text);
+  }
+
+  .feature-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(0,229,160,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  .btn-pricing {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--accent);
+    color: #000;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-pricing:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ── REVIEWS ── */
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .review-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: border-color 0.3s;
+  }
+
+  .review-card:hover { border-color: rgba(255,255,255,0.14); }
+
+  .stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1rem;
+    color: #f5b731;
+    font-size: 0.85rem;
+  }
+
+  .review-text {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+    font-family: var(--heading);
+    flex-shrink: 0;
+  }
+
+  .av-1 { background: rgba(0,229,160,0.15); color: var(--accent); }
+  .av-2 { background: rgba(124,109,255,0.15); color: #9b8dff; }
+  .av-3 { background: rgba(80,160,255,0.15); color: #60b0ff; }
+
+  .author-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .author-role {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 6rem 4%;
+    text-align: center;
+    position: relative;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 70% at 50% 50%, rgba(0,229,160,0.05), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: var(--heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 400px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.7rem 1.5rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-pill:hover { border-color: var(--accent); background: rgba(0,229,160,0.04); }
+
+  .contact-icon {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+
+  .ci-wa { background: rgba(37,211,102,0.15); color: #25d366; }
+  .ci-em { background: rgba(80,160,255,0.12); color: #60b0ff; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copy {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 300;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 4%;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero > * { animation: fadeUp 0.7s ease both; }
+  .hero > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero > *:nth-child(2) { animation-delay: 0.15s; }
+  .hero > *:nth-child(3) { animation-delay: 0.25s; }
+  .hero > *:nth-child(4) { animation-delay: 0.35s; }
+  .hero > *:nth-child(5) { animation-delay: 0.45s; }
+  .hero > *:nth-child(6) { animation-delay: 0.55s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 1rem 5%; }
+    .nav-links { display: none; }
+    h1 { font-size: 2.6rem; }
+    .hero { padding: 7rem 5% 4rem; }
+    .section { padding: 4rem 5%; }
+    .pricing-card { padding: 2rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <img src="fivotech-logo.png" alt="Fivo Tech Logo" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/2348148616039" target="_blank" rel="noopener">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-line"></div>
+
+  <div class="hero-badge">Trusted by 500+ businesses worldwide</div>
+
+  <h1>We build websites &amp;<br/><em>grow your audience</em></h1>
+
+  <p class="hero-sub">Your all-in-one growth partner — stunning websites, powerful Telegram promotion, and social media campaigns that actually move the needle.</p>
+
+  <div class="hero-actions">
+    <a class="btn-primary" href="https://wa.me/2348148616039" target="_blank" rel="noopener">
+      Start your project
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M3 8h10M9 4l4 4-4 4" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a class="btn-ghost" href="#pricing">
+      See pricing
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="#f0ede8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">48h</span>
+      <span class="stat-label">Delivery</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">30+</span>
+      <span class="stat-label">Countries</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4.9★</span>
+      <span class="stat-label">Avg Rating</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">500+</span>
+      <span class="stat-label">Clients</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">What we offer</div>
+  <h2 class="section-title">Everything you need<br/>to win online</h2>
+  <p class="section-sub">Three power-packed services. One unstoppable team.</p>
+
+  <div class="services-grid">
+    <div class="service-card featured">
+      <span class="service-tag tag-popular">Most popular</span>
+      <div class="service-icon icon-green">🌐</div>
+      <h3 class="service-title">Website Development</h3>
+      <p class="service-desc">Lightning-fast, beautifully designed websites built to convert. From landing pages to full platforms — we craft digital experiences that turn visitors into customers.</p>
+    </div>
+
+    <div class="service-card">
+      <span class="service-tag tag-trending">Trending</span>
+      <div class="service-icon icon-purple">✈️</div>
+      <h3 class="service-title">Telegram Promotion</h3>
+      <p class="service-desc">Grow real, engaged Telegram audiences through targeted campaigns and channel boosting. We bring the right people to you — not just numbers.</p>
+    </div>
+
+    <div class="service-card">
+      <span class="service-tag tag-new">New</span>
+      <div class="service-icon icon-blue">📱</div>
+      <h3 class="service-title">Social Media Promotion</h3>
+      <p class="service-desc">Instagram, TikTok, X &amp; more — content strategies and ads that put your brand in front of millions. Real growth, real engagement, real results.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div style="text-align: center; margin-bottom: 3.5rem;">
+    <div class="section-label">One simple plan</div>
+    <h2 class="section-title">A price you'll fall in love with</h2>
+    <p class="section-sub" style="margin: 0 auto;">No hidden fees. Cancel anytime. Yes, really.</p>
+  </div>
+
+  <div class="pricing-card">
+    <div class="pricing-glow"></div>
+    <span class="pricing-badge">Best value · Limited offer</span>
+    <h3 class="pricing-name">Fivo Growth Bundle</h3>
+    <p style="color: var(--muted); font-weight: 300; font-size: 0.9rem; margin-bottom: 1.25rem;">Website + Telegram + Social Media — the whole package.</p>
+    <div class="pricing-price">
+      <span class="price-original">$899</span>
+      <span class="price-current">$299</span>
+      <span class="price-period">/ project</span>
+    </div>
+    <p class="price-note">
+      <span style="color: var(--accent);">⚡</span>
+      Launch offer — grab it before it's gone
+    </p>
+
+    <ul class="features-list">
+      <li><span class="feature-check">✓</span> Custom-designed website</li>
+      <li><span class="feature-check">✓</span> Telegram channel promotion</li>
+      <li><span class="feature-check">✓</span> Multi-platform social media boost</li>
+      <li><span class="feature-check">✓</span> SEO + analytics setup</li>
+      <li><span class="feature-check">✓</span> Priority 24/7 support</li>
+      <li><span class="feature-check">✓</span> Free 30-day revisions</li>
+    </ul>
+
+    <a class="btn-pricing" href="https://wa.me/2348148616039" target="_blank" rel="noopener">Claim this deal →</a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- REVIEWS -->
+<section class="section" id="reviews">
+  <div class="section-label">Customer love</div>
+  <h2 class="section-title">Rated 4.9 by 500+ clients</h2>
+  <p class="section-sub">Based on real reviews from real businesses.</p>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Fivo Tech rebuilt our store in 7 days — conversions jumped 38%. Worth every penny."</p>
+      <div class="review-author">
+        <div class="avatar av-1">AM</div>
+        <div>
+          <div class="author-name">Aarav M.</div>
+          <div class="author-role">Founder, NovaCart</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Got 12k real Telegram members in a month. Best ROI I've ever seen from any service."</p>
+      <div class="review-author">
+        <div class="avatar av-2">LK</div>
+        <div>
+          <div class="author-name">Lina K.</div>
+          <div class="author-role">Crypto channel owner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Our Instagram grew from 2k to 50k. Their team actually understands growth."</p>
+      <div class="review-author">
+        <div class="avatar av-3">DR</div>
+        <div>
+          <div class="author-name">Daniel R.</div>
+          <div class="author-role">DTC Brand</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg"></div>
+  <div class="section-label">Ready to launch?</div>
+  <h2>Let's build something<br/><em style="font-style:normal; -webkit-text-stroke: 1.5px var(--accent); color: transparent;">extraordinary</em></h2>
+  <p>Join hundreds of brands building, promoting, and growing with Fivo Tech.</p>
+  <a class="btn-primary" href="https://wa.me/2348148616039" target="_blank" rel="noopener">
+    Get started today →
+  </a>
+
+  <div class="contact-row">
+    <a class="contact-pill" href="https://wa.me/2348148616039" target="_blank" rel="noopener">
+      <span class="contact-icon ci-wa">💬</span>
+      WhatsApp: +234 814 861 6039
+    </a>
+    <a class="contact-pill" href="mailto:fogundiran848@gmail.com">
+      <span class="contact-icon ci-em">✉️</span>
+      fogundiran848@gmail.com
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="logo" href="#">
+    <img src="fivotech-logo.png" alt="Fivo Tech Logo" />
+  </a>
+  <p class="footer-copy">© 2026 Fivo Tech. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
